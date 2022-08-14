@@ -7,7 +7,8 @@
 #' @param d_reduction Numeric. Reduction rate to be applied to the diameter of the branches whenever the symbols '(' and ')' appear in the string. Default is the golden ratio.
 #' @param angle Numeric. The angle in degrees when a change in direction is requested
 #' @param randomness Logical. Should randomness be applied to the angle of the branches?
-#' @param angle_sd Numerical. The standard deviation of the angle, used when randomness = TRUE.
+#' @param angle_cv Numerical. The coefficient of variation of the angle, used when randomness = TRUE. Default is 0.1,
+#' @param length_cv Numerical. The coefficient of variation of the length, used when randomness = TRUE. Default is 0.1,
 #' @param leaf_size Size of leaves (branches from the ends of the plant). Default is NULL (follows the applied d_reduction value).
 #'
 #' @importFrom magrittr %>%
@@ -17,7 +18,7 @@
 #' @export
 build_tree <- function (string = NULL, height = NULL, diameter = NULL,
                         h_reduction = (1+sqrt(5))/2-1, d_reduction = (1+sqrt(5))/2-1,
-                        angle = 90, randomness = FALSE, angle_sd = 1, leaf_size = NULL) {
+                        angle = 90, randomness = FALSE, angle_cv = .1, length_cv = .1,leaf_size = NULL) {
 
   utils::globalVariables(c(".", "sym", 'purrr'))
 
@@ -43,6 +44,8 @@ build_tree <- function (string = NULL, height = NULL, diameter = NULL,
   prop_red <- vector("list")
   ns <- 0L
   pr <- c(1, 1)
+
+  angle_sd <- angle * angle_cv
 
   n <- 0
 
@@ -81,10 +84,12 @@ build_tree <- function (string = NULL, height = NULL, diameter = NULL,
     if (!is.na(as.numeric(sring[[j]]))) {
       n <- n+1
 
-      step <- as.numeric(sring[[j]])
+      step <- as.numeric(sring[[j]]) * pr[1]
 
-      x <- cp[1] + step * pr[1] * cos(ch * pi/180)
-      y <- cp[2] + step * pr[1] * sin(ch * pi/180)
+      if(randomness){ step <- stats::rnorm(1, step, step * length_cv)}
+
+      x <- cp[1] + step * cos(ch * pi/180)
+      y <- cp[2] + step * sin(ch * pi/180)
 
       d <- diameter * pr[2]
 

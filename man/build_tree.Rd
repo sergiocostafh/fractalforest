@@ -12,7 +12,8 @@ build_tree(
   d_reduction = (1 + sqrt(5))/2 - 1,
   angle = 90,
   randomness = FALSE,
-  angle_sd = 1,
+  angle_cv = 0.1,
+  length_cv = 0.1,
   leaf_size = NULL
 )
 }
@@ -31,7 +32,9 @@ build_tree(
 
 \item{randomness}{Logical. Should randomness be applied to the angle of the branches?}
 
-\item{angle_sd}{Numerical. The standard deviation of the angle, used when randomness = TRUE.}
+\item{angle_cv}{Numerical. The coefficient of variation of the angle, used when randomness = TRUE. Default is 0.1,}
+
+\item{length_cv}{Numerical. The coefficient of variation of the length, used when randomness = TRUE. Default is 0.1,}
 
 \item{leaf_size}{Size of leaves (branches from the ends of the plant). Default is NULL (follows the applied d_reduction value).}
 }
