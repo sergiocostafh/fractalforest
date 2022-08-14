@@ -16,9 +16,10 @@
 #' @importFrom purrr detect_index
 #'
 #' @export
-build_tree <- function (string = NULL, height = NULL, diameter = NULL,
+build_tree <- function (string = NULL, angle = 15,
+                        height = NULL, diameter = NULL,
                         h_reduction = (1+sqrt(5))/2-1, d_reduction = (1+sqrt(5))/2-1,
-                        angle = 90, randomness = FALSE, angle_cv = .1, length_cv = .1,leaf_size = NULL) {
+                        randomness = FALSE, angle_cv = .1, length_cv = .1,leaf_size = NULL) {
 
   utils::globalVariables(c(".", "sym", 'purrr'))
 
@@ -78,6 +79,13 @@ build_tree <- function (string = NULL, height = NULL, diameter = NULL,
 
   sring <- sring[-which(sring == '')] %>% as.list()
   output <- vector("list", length(which(!is.na(as.numeric(sring)))))
+
+  if(is.null(height)){
+    height <- 1
+  }
+  if(is.null(diameter)){
+    diameter <- 1
+  }
 
   for (j in 1:length(sring)) {
 
@@ -163,8 +171,13 @@ build_tree <- function (string = NULL, height = NULL, diameter = NULL,
   }
 
   df <- output %>% dplyr::bind_rows()
+
   hfac <- (max(df$to_y)-min(df$from_y))/height
   df[,1:4] <- df[,1:4]/hfac
+
+  if(is.null(diameter)){
+    df <- df[,-5]
+  }
 
   return(df)
 

@@ -6,11 +6,11 @@
 \usage{
 build_tree(
   string = NULL,
+  angle = 15,
   height = NULL,
   diameter = NULL,
   h_reduction = (1 + sqrt(5))/2 - 1,
   d_reduction = (1 + sqrt(5))/2 - 1,
-  angle = 90,
   randomness = FALSE,
   angle_cv = 0.1,
   length_cv = 0.1,
@@ -20,6 +20,8 @@ build_tree(
 \arguments{
 \item{string}{A character vector giving the strings containing the turtle graphics instructions. Created by iterate_lsystem function.}
 
+\item{angle}{Numeric. The angle in degrees when a change in direction is requested}
+
 \item{height}{Total height of the plant.}
 
 \item{diameter}{Base diameter of the plant.}
@@ -27,8 +29,6 @@ build_tree(
 \item{h_reduction}{Numeric. Reduction rate to be applied to the length of the branches whenever the symbols '(' and ')' appear in the string. Default is the golden ratio.}
 
 \item{d_reduction}{Numeric. Reduction rate to be applied to the diameter of the branches whenever the symbols '(' and ')' appear in the string. Default is the golden ratio.}
-
-\item{angle}{Numeric. The angle in degrees when a change in direction is requested}
 
 \item{randomness}{Logical. Should randomness be applied to the angle of the branches?}
 
