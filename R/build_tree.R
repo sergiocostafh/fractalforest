@@ -21,7 +21,7 @@ build_tree <- function (string = NULL, angle = 15,
                         h_reduction = (1+sqrt(5))/2-1, d_reduction = (1+sqrt(5))/2-1,
                         randomness = FALSE, angle_cv = .1, length_cv = .1,leaf_size = NULL) {
 
-  utils::globalVariables(c(".", "sym", 'purrr'))
+  utils::globalVariables(c(".", "sym", 'purrr'), add = F)
 
   uniques <- strsplit(string, "") %>% unlist() %>% unique()
 
