@@ -75,6 +75,7 @@ build_tree <- function (string = NULL, angle = 15,
     stringr::str_split(pattern = ';') %>%
     unlist()
 
+  suppressWarnings({
   sring <- sring[-which(sring == '')] %>% as.list()
   output <- vector("list", length(which(!is.na(as.numeric(sring)))))
 
@@ -167,6 +168,7 @@ build_tree <- function (string = NULL, angle = 15,
     }
 
   }
+  })
 
   df <- output %>% dplyr::bind_rows()
 
