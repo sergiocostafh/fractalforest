@@ -2,6 +2,7 @@
 
 export(build_tree)
 export(draw_tree)
+export(get_tree_matrix)
 export(is_branch_symbol)
 export(is_pop_symbol)
 export(iterate_lsystem)
