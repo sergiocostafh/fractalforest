@@ -15,7 +15,7 @@ draw_tree <- function(tree_df, d_col = NULL, d_factor = 1, branch_color = 'black
       dplyr::mutate(diameter = .8)
   }
   else{
-    d_col <- ggplot2::ensym(d_col)
+    d_col <- ggplot2::sym(d_col)
     tree_df <- tree_df %>%
     dplyr::rename(diameter = {{d_col}})}
 
