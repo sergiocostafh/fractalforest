@@ -83,8 +83,9 @@ build_tree <- function (string = NULL, angle = 15,
     height <- 1
   }
   if(is.null(diameter)){
-    diameter <- 1
+    size <- 1
   }
+  else(size <- diameter)
 
   for (j in 1:length(sring)) {
 
@@ -98,7 +99,7 @@ build_tree <- function (string = NULL, angle = 15,
       x <- cp[1] + step * cos(ch * pi/180)
       y <- cp[2] + step * sin(ch * pi/180)
 
-      d <- diameter * pr[2]
+      d <- size * pr[2]
 
 
       if(
