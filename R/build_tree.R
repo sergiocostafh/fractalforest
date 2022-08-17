@@ -143,6 +143,17 @@ build_tree <- function (string = NULL, angle = 15,
 
     }
 
+    else if (sring[[j]] == "-"){
+      if(randomness){ang_j <- stats::rnorm(1, angle, angle_sd)}
+      else{ang_j <- angle}
+      ch = ch - ang_j}
+
+    else if (sring[[j]] == "+") {
+      if(randomness){ang_j <- rnorm(1, angle, angle_sd)}
+      else{ang_j <- angle}
+      ch = ch + angle
+    }
+
     else if (sring[[j]] == "(") {
 
       pr[1] <- pr[1] * h_reduction
@@ -155,17 +166,6 @@ build_tree <- function (string = NULL, angle = 15,
       pr[1] <- pr[1] / h_reduction
       pr[2] <- pr[2] / d_reduction
 
-    }
-
-    else if (sring[[j]] == "-"){
-      if(randomness){ang_j <- stats::rnorm(1, angle, angle_sd)}
-      else{ang_j <- angle}
-      ch = ch - ang_j}
-
-    else if (sring[[j]] == "+") {
-      if(randomness){ang_j <- rnorm(1, angle, angle_sd)}
-      else{ang_j <- angle}
-      ch = ch + angle
     }
 
   }
