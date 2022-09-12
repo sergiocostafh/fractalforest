@@ -2,13 +2,14 @@
 % Please edit documentation in R/build_tree.R
 \name{build_tree}
 \alias{build_tree}
-\title{Build a 2D L-System Tree Data Frame Using Turtle Graphics}
+\title{Build a 2D L-System Tree Using Turtle Graphics}
 \usage{
 build_tree(
   string = NULL,
   angle = 15,
   height = NULL,
   diameter = NULL,
+  crown_diameter = NULL,
   h_reduction = (1 + sqrt(5))/2 - 1,
   d_reduction = (1 + sqrt(5))/2 - 1,
   randomness = FALSE,
@@ -26,6 +27,8 @@ build_tree(
 
 \item{diameter}{Base diameter of the plant.}
 
+\item{crown_diameter}{Diameter of the plant crown.}
+
 \item{h_reduction}{Numeric. Reduction rate to be applied to the length of the branches whenever the symbols '(' and ')' appear in the string. Default is the golden ratio.}
 
 \item{d_reduction}{Numeric. Reduction rate to be applied to the diameter of the branches whenever the symbols '(' and ')' appear in the string. Default is the golden ratio.}
@@ -39,5 +42,5 @@ build_tree(
 \item{leaf_size}{Size of leaves (branches from the ends of the plant). Default is NULL (follows the applied d_reduction value).}
 }
 \description{
-Build a 2D L-System Tree Data Frame Using Turtle Graphics
+Build a 2D L-System Tree Using Turtle Graphics
 }
