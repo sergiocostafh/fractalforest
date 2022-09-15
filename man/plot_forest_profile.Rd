@@ -7,7 +7,6 @@
 plot_forest_profile(
   tree_df,
   d_col = NULL,
-  label = NULL,
   branch_color = "black",
   leaf_color = "black",
   simplify = F,
@@ -18,8 +17,6 @@ plot_forest_profile(
 \item{tree_df}{The resulting data.frame from the \code{build_forest_profile} function.}
 
 \item{d_col}{Name of the column that contains the diameters along the branches. Usually 'diameter'.}
-
-\item{label}{A column with the labels that identifies the trees (scientific names or other taxonomic identification).}
 
 \item{branch_color}{Character. Color of the tree branches.}
 

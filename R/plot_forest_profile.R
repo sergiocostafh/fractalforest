@@ -2,17 +2,15 @@
 #'
 #' @param tree_df The resulting data.frame from the `build_forest_profile` function.
 #' @param d_col Name of the column that contains the diameters along the branches. Usually 'diameter'.
-#' @param label A column with the labels that identifies the trees (scientific names or other taxonomic identification).
 #' @param branch_color Character. Color of the tree branches.
 #' @param leaf_color Character. Color of the tree leaves.
 #' @param simplify Logical. Whether to simplify geometries of the tree. Default to FALSE.
 #' @param dTolerance Numeric. If simplify = TRUE, the tolerance parameter to be considered. Default to .15.
 #'
 #' @export
-plot_forest_profile <- function(tree_df, d_col = NULL, label = NULL, branch_color = 'black', leaf_color = 'black', simplify = F, dTolerance = .15){
+plot_forest_profile <- function(tree_df, d_col = NULL, branch_color = 'black', leaf_color = 'black', simplify = F, dTolerance = .15){
 
   d_col <- rlang::enquo(d_col)
-  label <- rlang::enquo(label)
   branch_color <- rlang::enquo(branch_color)
   leaf_color <- rlang::enquo(leaf_color)
 
@@ -90,7 +88,7 @@ plot_forest_profile <- function(tree_df, d_col = NULL, label = NULL, branch_colo
     ggplot2::scale_fill_identity()+
     ggplot2::scale_color_identity()+
     ggplot2::labs(y = 'Height (m)')+
-    ggplot2::scale_y_continuous(limits=function(x){c(0,max(x)*1.1)}, expand = c(0,0), breaks = seq(0,100,5))+
+    ggplot2::scale_y_continuous(limits=function(x){c(0, max(x)*1.1)}, expand = c(0,0), breaks = seq(0,100,5))+
     ggplot2::scale_x_continuous(breaks = -1000)+
     cowplot::theme_minimal_hgrid()+
     ggplot2::theme(axis.title.x = ggplot2::element_blank(),
