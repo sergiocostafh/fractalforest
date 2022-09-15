@@ -8,7 +8,7 @@
 #' @param dTolerance Numeric. If simplify = TRUE, the tolerance parameter to be considered. Default to .15.
 #'
 #' @export
-draw_tree <- function(tree_df, d_col = NULL, branch_color = 'black', leaf_color = 'black', simplify = F, dTolerance = .15){
+plot_tree <- function(tree_df, d_col = NULL, branch_color = 'black', leaf_color = 'black', simplify = F, dTolerance = .15){
 
   d_col <- rlang::enquo(d_col)
 

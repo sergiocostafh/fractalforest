@@ -9,7 +9,7 @@
 #' @param dTolerance Numeric. If simplify = TRUE, the tolerance parameter to be considered. Default to .15.
 #'
 #' @export
-draw_forest_profile <- function(tree_df, d_col = NULL, label = NULL, branch_color = 'black', leaf_color = 'black', simplify = F, dTolerance = .15){
+plot_forest_profile <- function(tree_df, d_col = NULL, label = NULL, branch_color = 'black', leaf_color = 'black', simplify = F, dTolerance = .15){
 
   d_col <- rlang::enquo(d_col)
   label <- rlang::enquo(label)
