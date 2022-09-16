@@ -69,7 +69,7 @@ plot_forest_profile <- function(tree_df, d_col = NULL, branch_color = 'black', l
   lines_sf <- sf::st_sf('ID' = df_geom$ID, 'geometry' = lines)
 
   plot_df <- tree_df %>%
-    dplyr::mutate(geometry = sf::st_buffer(lines_sf, dist = tree_df$diameter/100, endCapStyle = 'ROUND') %>% dplyr::pull(geometry)) %>%
+    dplyr::mutate(geometry = sf::st_buffer(lines_sf, dist = tree_df$diameter/100, endCapStyle = 'SQUARE') %>% dplyr::pull(geometry)) %>%
     sf::st_as_sf() %>%
     dplyr::group_by(type, lc, bc) %>%
     dplyr::summarise()
