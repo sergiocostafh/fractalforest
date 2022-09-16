@@ -36,7 +36,7 @@ plot_tree <- function(tree_df, d_col = NULL, branch_color = 'black', leaf_color 
   lines_sf <- sf::st_sf('ID' = df_geom$ID, 'geometry' = lines)
 
   plot_df <- tree_df %>%
-    dplyr::mutate(geometry = sf::st_buffer(lines_sf, dist = tree_df$diameter/100, endCapStyle = 'FLAT') %>% dplyr::pull(geometry)) %>%
+    dplyr::mutate(geometry = sf::st_buffer(lines_sf, dist = tree_df$diameter/100, endCapStyle = 'ROUND') %>% dplyr::pull(geometry)) %>%
     sf::st_as_sf() %>%
     dplyr::group_by(type) %>%
     dplyr::summarise()

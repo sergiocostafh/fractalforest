@@ -20,7 +20,7 @@ generate_point_cloud <- function(tree_df, pt_distance = .3){
   lines_sf <- sf::st_sf('ID' = df_geom$ID, 'geometry' = lines)
 
   plot_df <- tree_df %>%
-    dplyr::mutate(geometry = sf::st_buffer(lines_sf, dist = tree_df$diameter/100, endCapStyle = 'FLAT') %>% dplyr::pull(geometry),
+    dplyr::mutate(geometry = sf::st_buffer(lines_sf, dist = tree_df$diameter/100, endCapStyle = 'ROUND') %>% dplyr::pull(geometry),
                   h_lin = sqrt((from_x-to_x)^2+(from_y-to_y)^2)) %>%
     sf::st_as_sf() %>%
     dplyr::group_by(tree_id) %>%
