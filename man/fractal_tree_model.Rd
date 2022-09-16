@@ -4,18 +4,18 @@
 \alias{fractal_tree_model}
 \title{Build a 2D L-System Tree from Pre-defined Tree Templates}
 \usage{
-fractal_tree_model(tree_model, n)
+fractal_tree_model(tree_model, n_iter)
 }
 \arguments{
 \item{tree_model}{The integer or the name (character) that refers to the desired tree model. Check details.}
 
-\item{n}{Integer. The number of iterations to build the tree. Each tree model has its own default value.}
+\item{n_iter}{Integer. The number of iterations to build the tree. Each tree model has its own default value.}
 }
 \description{
 Build a 2D L-System Tree from Pre-defined Tree Templates
 }
 \details{
-There are 10 pre-implemented tree templates in this function, as follows (default \code{n} between parentheses):
+There are 10 pre-implemented tree templates in this function, as follows (default \code{n_iter} between parentheses):
 \itemize{
 \item 1 or "binary_tree" (6);
 \item 2 or "alternate_tree" (5);

@@ -1,9 +1,9 @@
 #' Build a 2D L-System Tree from Pre-defined Tree Templates
 #'
 #' @param tree_model The integer or the name (character) that refers to the desired tree model. Check details.
-#' @param n Integer. The number of iterations to build the tree. Each tree model has its own default value.
+#' @param n_iter Integer. The number of iterations to build the tree. Each tree model has its own default value.
 #'
-#' @details There are 10 pre-implemented tree templates in this function, as follows (default `n` between parentheses):
+#' @details There are 10 pre-implemented tree templates in this function, as follows (default `n_iter` between parentheses):
 #' - 1 or "binary_tree" (6);
 #' - 2 or "alternate_tree" (5);
 #' - 3 or "arrow_weed" (5);
@@ -16,7 +16,7 @@
 #' - 10 or "crooked_stochastic_fuzzy_weed" (4).
 #'
 #' @export
-fractal_tree_model <- function(tree_model, n){
+fractal_tree_model <- function(tree_model, n_iter){
 
   if(tree_model %in% list(1,"binary_tree")){
     rules <- data.frame(
@@ -25,7 +25,7 @@ fractal_tree_model <- function(tree_model, n){
       stringsAsFactors = FALSE
     )
 
-    if(missing(n)){n <- 6}
+    if(missing(n_iter)){n_iter <- 6}
 
   }
 
@@ -36,7 +36,7 @@ fractal_tree_model <- function(tree_model, n){
       stringsAsFactors = FALSE
     )
 
-    if(missing(n)){n <- 5}
+    if(missing(n_iter)){n_iter <- 5}
 
   }
 
@@ -47,7 +47,7 @@ fractal_tree_model <- function(tree_model, n){
       stringsAsFactors = FALSE
     )
 
-    if(missing(n)){n <- 5}
+    if(missing(n_iter)){n_iter <- 5}
 
   }
 
@@ -58,7 +58,7 @@ fractal_tree_model <- function(tree_model, n){
       stringsAsFactors = FALSE
     )
 
-    if(missing(n)){n <- 5}
+    if(missing(n_iter)){n_iter <- 5}
 
   }
 
@@ -69,7 +69,7 @@ fractal_tree_model <- function(tree_model, n){
       stringsAsFactors = FALSE
     )
 
-    if(missing(n)){n <- 4}
+    if(missing(n_iter)){n_iter <- 4}
 
   }
 
@@ -80,7 +80,7 @@ fractal_tree_model <- function(tree_model, n){
       stringsAsFactors = FALSE
     )
 
-    if(missing(n)){n <- 6}
+    if(missing(n_iter)){n_iter <- 6}
 
   }
 
@@ -91,7 +91,7 @@ fractal_tree_model <- function(tree_model, n){
       stringsAsFactors = FALSE
     )
 
-    if(missing(n)){n <- 5}
+    if(missing(n_iter)){n_iter <- 5}
 
   }
 
@@ -102,7 +102,7 @@ fractal_tree_model <- function(tree_model, n){
       stringsAsFactors = FALSE
     )
 
-    if(missing(n)){n <- 5}
+    if(missing(n_iter)){n_iter <- 5}
 
   }
 
@@ -113,7 +113,7 @@ fractal_tree_model <- function(tree_model, n){
       stringsAsFactors = FALSE
     )
 
-    if(missing(n)){n <- 5}
+    if(missing(n_iter)){n_iter <- 5}
 
   }
 
@@ -124,9 +124,9 @@ fractal_tree_model <- function(tree_model, n){
       stringsAsFactors = FALSE
     )
 
-    if(missing(n)){n <- 4}
+    if(missing(n_iter)){n_iter <- 4}
 
   }
 
-  fractalforest::iterate_lsystem(init = '0', rules = rules, n = n)
+  fractalforest::iterate_lsystem(init = '0', rules = rules, n_iter = n_iter)
 }

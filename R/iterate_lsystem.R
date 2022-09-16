@@ -2,11 +2,11 @@
 #'
 #' @param init A character string giving variables (symbols) to use as the initial string, also known as the axiom.
 #' @param rules A data frame containing columns "inp" and "out". These contain the input variables and the corresponding replacement string.
-#' @param n An integer giving the number of cycles or iterations desired.
+#' @param n_iter An integer giving the number of cycles or iterations desired.
 #' @param verbose An integer giving the level of information desired as the calculation proceeds. verbose = 1L gives basic information at each cycle. Any value greater than 1 gives much more detail. Supress messages by using a value less than 1.
 #'
 #' @export
-iterate_lsystem <- function(init = NULL, rules = NULL, n = 5,
+iterate_lsystem <- function(init = NULL, rules = NULL, n_iter = 5,
                             verbose = 0L) {
 
   nc <- nchar(rules$inp)
@@ -18,7 +18,7 @@ iterate_lsystem <- function(init = NULL, rules = NULL, n = 5,
   out <- rep(NA_character_, n+1) # save init and all output
   out[1] <- init
 
-  for (j in 1:n) {
+  for (j in 1:n_iter) {
     # apply all the rules simultaneously to the current string
     # this is different than any built-in string processing
     # I can find in R

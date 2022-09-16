@@ -6,11 +6,12 @@
 \usage{
 build_forest_profile(
   data,
-  n_trees,
   height,
   diameter,
   label,
   string = NULL,
+  tree_model = "binary_tree",
+  n_iter = NULL,
   angle = 15,
   crown_diameter = NULL,
   h_reduction = (1 + sqrt(5))/2 - 1,
@@ -19,7 +20,8 @@ build_forest_profile(
   angle_cv = 0.1,
   length_cv = 0.1,
   leaf_size = NULL,
-  n_iter = 6,
+  sample = FALSE,
+  n_trees,
   dist = 3,
   dist_cv = 0.3
 )
@@ -27,15 +29,17 @@ build_forest_profile(
 \arguments{
 \item{data}{A data frame that represents field or simulated forest inventory data.}
 
-\item{n_trees}{Integer. The number of sample trees.}
-
 \item{height}{Name of the column containing the heights of the trees.}
 
 \item{diameter}{Name of the column containing the dbh or base diameters of the trees.}
 
 \item{label}{A column with the labels that identifies the trees (scientific names or other taxonomic identification).}
 
-\item{string}{The string or the column of the strings that contains the turtle graphics instructions, created or not by \code{iterate_lsystem} function. If NULL (default), the binary tree model is used.}
+\item{string}{The string or the column of the strings that contains the turtle graphics instructions, created by \code{iterate_lsystem} function. If NULL (default), the \code{tree_model} argument will be used.}
+
+\item{tree_model}{The tree model to be used when \code{string} = NULL. Can be an integer or the name (character) that refers to the desired tree model. Check the \code{fractal_tree_model} function help for more details. Default is "binary_tree".}
+
+\item{n_iter}{Integer. The number of iterations to build the selected \code{tree_model} when \code{string} = NULL (default). Default value = NULL means it depends on the selected \code{tree_model}. Check the \code{fractal_tree_model} function help for more details.}
 
 \item{angle}{Numeric. The angle in degrees when a change in direction is requested.}
 
@@ -53,7 +57,9 @@ build_forest_profile(
 
 \item{leaf_size}{Size of leaves (branches from the ends of the plant). Default is NULL (follows the applied d_reduction value).}
 
-\item{n_iter}{Integer. The number of iterations to build the binary tree model when \code{string} = NULL (default). Default is 6.}
+\item{sample}{Logical. Whether to sample rows (individuals) from the \code{data}. If FALSE, the entire \code{data} will be used. Default to TRUE.}
+
+\item{n_trees}{Integer. The number of trees to be sampled from \code{data} when \code{sample} = TRUE.}
 
 \item{dist}{Numerical. The average linear distance between the trees.}
 
@@ -63,5 +69,5 @@ build_forest_profile(
 Build a 2D Forest Profile of L-System Trees Based on Inventory Data
 }
 \details{
-A column of \code{data} can be declared in the string argument. In this case the column must contain for each line (tree) the turtle graphics string that builds the tree.
+A column of \code{data} can be declared in the \code{string} argument. In this case the column must contain for each line (tree) the turtle graphics string that builds the tree.
 }

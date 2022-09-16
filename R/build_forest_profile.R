@@ -1,11 +1,12 @@
 #' Build a 2D Forest Profile of L-System Trees Based on Inventory Data
 #'
 #' @param data A data frame that represents field or simulated forest inventory data.
-#' @param n_trees Integer. The number of sample trees.
 #' @param height Name of the column containing the heights of the trees.
 #' @param diameter Name of the column containing the dbh or base diameters of the trees.
 #' @param label A column with the labels that identifies the trees (scientific names or other taxonomic identification).
-#' @param string The string or the column of the strings that contains the turtle graphics instructions, created or not by `iterate_lsystem` function. If NULL (default), the binary tree model is used.
+#' @param string The string or the column of the strings that contains the turtle graphics instructions, created by `iterate_lsystem` function. If NULL (default), the `tree_model` argument will be used.
+#' @param tree_model The tree model to be used when `string` = NULL. Can be an integer or the name (character) that refers to the desired tree model. Check the `fractal_tree_model` function help for more details. Default is "binary_tree".
+#' @param n_iter Integer. The number of iterations to build the selected `tree_model` when `string` = NULL (default). Default value = NULL means it depends on the selected `tree_model`. Check the `fractal_tree_model` function help for more details.
 #' @param angle Numeric. The angle in degrees when a change in direction is requested.
 #' @param crown_diameter Crown diameter of the plant.
 #' @param h_reduction Numeric. Reduction rate to be applied to the length of the branches whenever the symbols '(' and ')' appear in the string. Default is the golden ratio.
@@ -14,7 +15,8 @@
 #' @param angle_cv Numerical. The coefficient of variation of the angle, used when `randomness` = TRUE. Default is 0.1.
 #' @param length_cv Numerical. The coefficient of variation of the length, used when `randomness` = TRUE. Default is 0.1.
 #' @param leaf_size Size of leaves (branches from the ends of the plant). Default is NULL (follows the applied d_reduction value).
-#' @param n_iter Integer. The number of iterations to build the binary tree model when `string` = NULL (default). Default is 6.
+#' @param sample Logical. Whether to sample rows (individuals) from the `data`. If FALSE, the entire `data` will be used. Default to TRUE.
+#' @param n_trees Integer. The number of trees to be sampled from `data` when `sample` = TRUE.
 #' @param dist Numerical. The average linear distance between the trees.
 #' @param dist_cv Numerical. The coefficient of variation of the `dist`argument. Default is .3.
 #'
@@ -22,18 +24,28 @@
 #' @importFrom stats rnorm
 #' @importFrom purrr detect_index
 #'
-#' @details A column of `data` can be declared in the string argument. In this case the column must contain for each line (tree) the turtle graphics string that builds the tree.
+#' @details A column of `data` can be declared in the `string` argument. In this case the column must contain for each line (tree) the turtle graphics string that builds the tree.
 #'
 #' @export
-build_forest_profile <- function(data, n_trees,
+build_forest_profile <- function(data,
                          height, diameter, label,
-                         string = NULL, angle = 15, crown_diameter = NULL,
+                         string = NULL, tree_model = "binary_tree", n_iter = NULL,
+                         angle = 15, crown_diameter = NULL,
                          h_reduction = (1+sqrt(5))/2-1, d_reduction = (1+sqrt(5))/2-1,
                          randomness = FALSE, angle_cv = .1, length_cv = .1, leaf_size = NULL,
-                         n_iter = 6,
+                         sample = FALSE, n_trees,
                          dist = 3, dist_cv = .3){
 
-  full_df <- data
+  if(sample){
+    smp <- sample(1:nrow(data), n_trees, replace = T)
+
+    full_df <- data[smp, ]
+  }
+  else{
+    full_df <- data
+
+    n_trees <- nrow(full_df)
+  }
 
   # required columns
   diameter <- rlang::ensym(diameter)
@@ -45,12 +57,15 @@ build_forest_profile <- function(data, n_trees,
 
   if(rlang::quo_is_null(string)){
 
-    prim_rules <- data.frame(inp = c("0", "1"),
-                             out = c("1[-(0)]+(0)", "1"), stringsAsFactors = FALSE)
-    primitive_plant <- iterate_lsystem(init = "0", rules = prim_rules, n = n_iter)
+    if(is.null(n_iter)){
+      strings <- replicate(fractalforest::fractal_tree_model(tree_model), n = n_trees)
+    }
+    else{
+      strings <- replicate(fractalforest::fractal_tree_model(tree_model, n_iter = n_iter), n = n_trees)
+    }
 
     full_df <- full_df %>%
-      dplyr::mutate(..string.. = primitive_plant)
+      dplyr::mutate(..string.. = strings)
 
   }
   else if(rlang::quo_is_symbol(string)){
@@ -207,14 +222,21 @@ build_forest_profile <- function(data, n_trees,
       dplyr::mutate(..length_cv.. = length_cv)
   }
 
-
-  smp <- sample(1:nrow(data), n_trees, replace = T)
-
-  df <- full_df[smp,] %>%
-    dplyr::select(!!diameter, !!height, !!label,
-           ..string.., ..angle.., ..crown_diameter..,
-           ..h_reduction.., ..d_reduction.., ..randomness..,
-           ..angle_cv.., ..length_cv.., ..leaf_size..)
+    df <- full_df %>%
+      dplyr::select(
+        !!diameter,
+        !!height,
+        !!label,
+        ..string..,
+        ..angle..,
+        ..crown_diameter..,
+        ..h_reduction..,
+        ..d_reduction..,
+        ..randomness..,
+        ..angle_cv..,
+        ..length_cv..,
+        ..leaf_size..
+      )
 
   ac_dist <- 0
   nx <- 0
