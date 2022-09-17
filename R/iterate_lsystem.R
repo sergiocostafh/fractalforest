@@ -15,7 +15,7 @@ iterate_lsystem <- function(init = NULL, rules = NULL, n_iter = 5,
   if (verbose == 1L) cat("\nCycle 0 string has length ", nchar(init), "\n", sep = "")
   if (verbose == 1L) cat("Cycle 0:", init, "\n")
   curr <- init
-  out <- rep(NA_character_, n+1) # save init and all output
+  out <- rep(NA_character_, n_iter+1) # save init and all output
   out[1] <- init
 
   for (j in 1:n_iter) {
